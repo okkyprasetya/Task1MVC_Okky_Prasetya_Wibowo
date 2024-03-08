@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<body>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post" action="/Articles/Update">
+                        <div class="form-group">
+                            <label for="ArticleID">Article ID:</label>
+                            <input type="text" class="form-control" id="ArticleID" name="ArticleID" readonly value="@Model.ArticleID">
+                        </div>
+                        <div class="form-group">
+                            <label for="Title">Title:</label>
+                            <input type="text" class="form-control" id="Title" name="Title" value="@Model.Title">
+                        </div>
+                        <div class="form-group">
+                            <label for="Details">Details:</label>
+                            <textarea class="form-control" id="Details" name="Details" >@Model.Details</textarea>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="IsApproved" name="IsApproved" @(Model.IsApproved ? "checked" : "")>
+                            <label class="form-check-label" for="IsApproved">Is Approved</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="Pic">Picture:</label>
+                            <input type="text" class="form-control" id="Pic" name="Pic" value="@Model.Pic">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#IsApproved').change(function () {
+                var isChecked = $(this).prop('checked');
+                $(this).val(isChecked);
+            });
+        });
+    </script>
+}

@@ -66,7 +66,48 @@ namespace MyWebFormApp.BLL
 
         public IEnumerable<CategoryDTO> GetByName(string name)
         {
-            throw new System.NotImplementedException();
+            var categories = _categoryDAL.GetByName(name);
+
+            //mapping ke DTO
+            List<CategoryDTO> listCategoriesDto = new List<CategoryDTO>();
+            foreach (var category in categories)
+            {
+                listCategoriesDto.Add(new CategoryDTO
+                {
+                    CategoryID = category.CategoryID,
+                    CategoryName = category.CategoryName
+                });
+            }
+            return listCategoriesDto;
+        }
+
+        public int GetCountCategories(string name)
+        {
+            return _categoryDAL.GetCountCategories(name);
+        }
+
+        public IEnumerable<CategoryDTO> GetWithPaging(int pageNumber, int pageSize, string name)
+        {
+            /*if (pageNumber <= 0)
+           {
+               throw new ArgumentException("PageNumber is required");
+           }
+           else if (pageSize <= 0)
+           {
+               throw new ArgumentException("PageSize is required");
+           }*/
+
+            List<CategoryDTO> listCategoriesDto = new List<CategoryDTO>();
+            var categories = _categoryDAL.GetWithPaging(pageNumber, pageSize, name);
+            foreach (var category in categories)
+            {
+                listCategoriesDto.Add(new CategoryDTO
+                {
+                    CategoryID = category.CategoryID,
+                    CategoryName = category.CategoryName
+                });
+            }
+            return listCategoriesDto;
         }
 
         public void Insert(CategoryCreateDTO entity)
@@ -93,6 +134,7 @@ namespace MyWebFormApp.BLL
                 throw new ArgumentException(ex.Message);
             }
         }
+
 
         public void Update(CategoryUpdateDTO entity)
         {

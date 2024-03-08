@@ -12,6 +12,10 @@ namespace MyWebFormApp.BO
         public bool IsApproved { get; set; }
         public string Pic { get; set; }
 
+        public string username { get; set; }
+
         public Category Category { get; set; }
+
+        public User User { get; set; }
     }
 }

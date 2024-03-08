@@ -11,25 +11,36 @@
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Contoh Object Datasource</h6>
             </div>
-            
+
+            <div class="row">
+                <div class="col">
+                    <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control" />
+                </div>
+                <div class="col">
+                    <asp:Button ID="btnSearch" Text="Search" runat="server" CssClass="btn btn-success btn-sm" />
+                </div>
+            </div>
+            <hr />
             <div class="card-body">
-               <%-- <asp:ObjectDataSource ID="odsCategories" TypeName="MyWebFormApp.BLL.CategoryBLL"
+                <%-- <asp:ObjectDataSource ID="odsCategories" TypeName="MyWebFormApp.BLL.CategoryBLL"
                    SelectMethod="GetAll" InsertMethod="Insert" UpdateMethod="Update" DeleteMethod="Delete" runat="server">
                     <InsertParameters>
                         <asp:Parameter Name="CategoryName" Type="String" />
                     </InsertParameters>
                 </asp:ObjectDataSource>--%>
-
-                <asp:GridView ID="gvCategories" CssClass="table table-hover" ItemType="MyWebFormApp.BLL.DTOs.CategoryDTO" 
+                 <div class="row">
+                    <asp:Literal ID="ltMessage" runat="server" />
+                </div>
+                <asp:GridView ID="gvCategories" CssClass="table table-hover" ItemType="MyWebFormApp.BLL.DTOs.CategoryDTO"
                     SelectMethod="GetAll" UpdateMethod="Update" DeleteMethod="Delete"
-                        DataKeyNames="CategoryID,CategoryName" runat="server" AutoGenerateColumns="False">
+                    DataKeyNames="id_kat,nama_kat" runat="server" AutoGenerateColumns="False">
                     <Columns>
                         <asp:TemplateField HeaderText="CategoryName">
                             <ItemTemplate>
-                                <asp:Label ID="lblCategoryName" runat="server" Text='<%# Item.CategoryName %>' />
+                                <asp:Label ID="lblCategoryName" runat="server" Text='<%# Item.nama_kat %>' />
                             </ItemTemplate>
                             <EditItemTemplate>
-                                <asp:TextBox ID="txtCategoryName" runat="server" Text='<%# BindItem.CategoryName %>' />
+                                <asp:TextBox ID="txtCategoryName" runat="server" Text='<%# BindItem.nama_kat %>' />
                             </EditItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField ShowHeader="False">
@@ -44,11 +55,19 @@
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
-                </asp:GridView><br />
+                </asp:GridView>
+                <asp:Button ID="btnPrev" Text="Prev" CssClass="btn btn-primary" runat="server" OnClick="btnPrev_Click" />
+                <asp:Button ID="btnNext" Text="Next" CssClass="btn btn-primary" runat="server" OnClick="btnNext_Click" />
+                <asp:Literal ID="ltPosition" runat="server" />
                 <asp:Label ID="lblKeterangan" runat="server" /><br />
-                <asp:Button Text="Insert" ID="btnInsert" runat="server" />
+                <div class="col-lg-6">
+                    <div class="mb-3 mt-3">
+                        <label for="txtCategoryNameInput" class="form-label">Cetegory Name :</label>
+                        <asp:TextBox ID="txtCategoryNameInput" CssClass="form-control" runat="server" />
+                    </div>
+                    <asp:Button Text="Add" ID="btnAdd" class="btn btn-primary btn-sm" OnClick="btnAdd_Click" runat="server" />
+                </div>
             </div>
         </div>
-
     </div>
 </asp:Content>

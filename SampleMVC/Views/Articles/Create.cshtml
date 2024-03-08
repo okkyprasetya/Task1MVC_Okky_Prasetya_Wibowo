@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Create";
+}
+<!DOCTYPE html>
+
+<head>
+    <title>@ViewData["Title"]</title>
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post" action="/Articles/Create">
+                        <div class="form-group">
+                            <label for="CategoryName">Category:</label>
+                            <select class="form-control" id="CategoryID" name="CategoryID">
+                                @foreach (var categories in Model)
+                                {
+                                    <option value="@categories.CategoryID">@categories.CategoryName</option>
+                                }
+                                <!-- Add more options as needed -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="Title">Title:</label>
+                            <input type="text" class="form-control" id="Title" name="Title" placeholder="Insert Title Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="Details">Details:</label>
+                            <input type="text" class="form-control" id="Details" name="Details" placeholder="Details article">
+                        </div>
+                        <div class="form-group">
+                            <label for="pic">Picture:</label>
+                            <input type="text" class="form-control" id="pic" name="pic" placeholder="Insert file name">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

@@ -1,4 +1,6 @@
-﻿Imports MyWebFormApp.BLL
+﻿Imports System
+Imports System.Web.UI.WebControls
+Imports MyWebFormApp.BLL
 Imports MyWebFormApp.BLL.DTOs
 
 Public Class CategoriesPage
@@ -25,7 +27,7 @@ Public Class CategoriesPage
             'Dim categoryName = gvCategories.DataKeys(index)("CategoryName").ToString()
             txtCategoryID.Text = categoryID.ToString()
             Dim objCategory = categoryBLL.GetById(categoryID)
-            txtCategoryName.Text = objCategory.CategoryName
+            txtCategoryName.Text = objCategory.nama_kat
         ElseIf e.CommandName = "Delete" Then
             Dim index As Integer = Convert.ToInt32(e.CommandArgument)
             Dim categoryID As Integer = Convert.ToInt32(gvCategories.DataKeys(index).Value)
@@ -48,8 +50,8 @@ Public Class CategoriesPage
             End If
 
             Dim updateCategory As New CategoryUpdateDTO
-            updateCategory.CategoryID = Convert.ToInt32(txtCategoryID.Text)
-            updateCategory.CategoryName = txtCategoryName.Text
+            updateCategory.id_kat = Convert.ToInt32(txtCategoryID.Text)
+            updateCategory.nama_kat = txtCategoryName.Text
             categoryBLL.Update(updateCategory)
             LoadData()
             ltMessage.Text = "<span class='alert alert-success'>Category updated successfully</span>"
@@ -67,7 +69,7 @@ Public Class CategoriesPage
     Protected Sub btnSave_Click(sender As Object, e As EventArgs)
         Try
             Dim insertCategory As New CategoryCreateDTO
-            insertCategory.CategoryName = txtCategoryName.Text
+            insertCategory.nama_kat = txtCategoryName.Text
             categoryBLL.Insert(insertCategory)
 
             LoadData()

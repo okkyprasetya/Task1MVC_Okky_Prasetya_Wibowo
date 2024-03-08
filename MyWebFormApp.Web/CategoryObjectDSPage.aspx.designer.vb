@@ -14,6 +14,33 @@ Option Explicit On
 Partial Public Class CategoryObjectDSPage
 
     '''<summary>
+    '''txtSearch control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSearch As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''btnSearch control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnSearch As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''ltMessage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ltMessage As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
     '''gvCategories control.
     '''</summary>
     '''<remarks>
@@ -21,6 +48,33 @@ Partial Public Class CategoryObjectDSPage
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents gvCategories As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
+    '''btnPrev control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnPrev As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnNext control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnNext As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''ltPosition control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ltPosition As Global.System.Web.UI.WebControls.Literal
 
     '''<summary>
     '''lblKeterangan control.
@@ -32,11 +86,20 @@ Partial Public Class CategoryObjectDSPage
     Protected WithEvents lblKeterangan As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''btnInsert control.
+    '''txtCategoryNameInput control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnInsert As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents txtCategoryNameInput As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''btnAdd control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAdd As Global.System.Web.UI.WebControls.Button
 End Class

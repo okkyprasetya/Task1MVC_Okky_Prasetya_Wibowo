@@ -3,7 +3,6 @@ using MyWebFormApp.BO;
 using MyWebFormApp.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
 
 namespace MyWebFormApp.DAL
@@ -12,15 +11,21 @@ namespace MyWebFormApp.DAL
     {
         private string GetConnectionString()
         {
-            //return @"Data Source=ACTUAL;Initial Catalog=LatihanDb;Integrated Security=True;TrustServerCertificate=True";
-            return ConfigurationManager.ConnectionStrings["MyDbConnectionString"].ConnectionString;
+            /*if (System.Configuration.ConfigurationManager.ConnectionStrings["MyDbConnectionString"] == null)
+            {
+                var MyConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+                return MyConfig.GetConnectionString("MyDbConnectionString");
+            }
+            var connString = System.Configuration.ConfigurationManager.ConnectionStrings["MyDbConnectionString"].ConnectionString;
+            return connString;*/
+            return Helper.GetConnectionString();
         }
 
         public void Delete(int id)
         {
             using (SqlConnection conn = new SqlConnection(GetConnectionString()))
             {
-                var strSql = @"DELETE FROM [Categories] WHERE [CategoryID] = @CategoryID";
+                var strSql = @"DELETE FROM Categories WHERE CategoryID = @CategoryID";
                 var param = new { CategoryID = id };
                 try
                 {
@@ -46,9 +51,9 @@ namespace MyWebFormApp.DAL
             using (SqlConnection conn = new SqlConnection(GetConnectionString()))
             {
                 //var strSql = @"select * from Categories order by CategoryName";
-                var strSql = @"usp_GetCategories";
+                var strSql = @"SELECT * FROM Categories ORDER BY CategoryID";
 
-                var results = conn.Query<Category>(strSql, commandType: System.Data.CommandType.StoredProcedure);
+                var results = conn.Query<Category>(strSql, commandType: System.Data.CommandType.Text);
                 return results;
             }
         }
@@ -57,7 +62,7 @@ namespace MyWebFormApp.DAL
         {
             using (SqlConnection conn = new SqlConnection(GetConnectionString()))
             {
-                var strSql = @"select * from Categories where CategoryID = @CategoryID";
+                var strSql = @"select * from Category where CategoryID = @CategoryID";
                 var param = new { CategoryID = id };
                 var result = conn.QuerySingleOrDefault<Category>(strSql, param);
                 return result;
@@ -66,18 +71,24 @@ namespace MyWebFormApp.DAL
 
         public IEnumerable<Category> GetByName(string name)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
+            {
+                var strSql = @"select * from Category where CategoryName like @CategoryName";
+                var param = new { CategoryName = $"%{name}%" };
+                var results = conn.Query<Category>(strSql, param);
+                return results;
+            }
         }
 
         public void Insert(Category entity)
         {
             using (SqlConnection conn = new SqlConnection(GetConnectionString()))
             {
-                var strSql = "usp_CreateCategory";
+                var strSql = "INSERT INTO dbo.Category (CategoryName) VALUES (@CategoryName)";
                 var param = new { CategoryName = entity.CategoryName };
                 try
                 {
-                    int result = conn.Execute(strSql, param, commandType: System.Data.CommandType.StoredProcedure);
+                    int result = conn.Execute(strSql, param, commandType: System.Data.CommandType.Text);
                     if (result != 1)
                     {
                         throw new ArgumentException("Insert data failed..");
@@ -101,7 +112,7 @@ namespace MyWebFormApp.DAL
             {
                 try
                 {
-                    var strSql = @"UPDATE [Categories] SET [CategoryName] = @CategoryName WHERE [CategoryID] = @CategoryID";
+                    var strSql = @"UPDATE Category SET CategoryName = @CategoryName WHERE CategoryID = @CategoryID";
                     var param = new { CategoryName = entity.CategoryName, CategoryID = entity.CategoryID };
                     int result = conn.Execute(strSql, param);
 
@@ -121,6 +132,36 @@ namespace MyWebFormApp.DAL
                 }
             }
 
+        }
+
+        public IEnumerable<Category> GetWithPaging(int pageNumber, int pageSize, string name)
+        {
+            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
+            {
+                var strSql = @"select * from Categories 
+                               where CategoryName like @CategoryName 
+                               order by CategoryName OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY";
+                var param = new { CategoryName = $"%{name}%", Offset = (pageNumber - 1) * pageSize, PageSize = pageSize };
+                var results = conn.Query<Category>(strSql, param);
+                return results;
+            }
+        }
+
+        public int GetCountCategories(string name)
+        {
+            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
+            {
+                var strSql = @"select count(*) from Categories 
+                               where CategoryName like @CategoryName";
+                var param = new { CategoryName = $"%{name}%" };
+                var result = Convert.ToInt32(conn.ExecuteScalar(strSql, param));
+                return result;
+            }
+        }
+
+        public int InsertWithIdentity(Category category)
+        {
+            throw new NotImplementedException();
         }
     }
 }
