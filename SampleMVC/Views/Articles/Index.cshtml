@@ -68,7 +68,7 @@
                                                 <td>
                                                     <input type="checkbox" @(article.IsApproved ? "checked" : "") disabled />
                                                 </td>
-                                                <td>@article.Pic</td>
+                                                <td><img src="@article.Pic" alt="@article.Pic" /></td>
                                                 <td>@article.username</td>
                                                 <td>
                                                     <a href="/Articles/Update/@article.ArticleID" class="btn btn-primary">Edit</a>
